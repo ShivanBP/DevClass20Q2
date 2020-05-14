@@ -1,0 +1,15 @@
+<apex:page controller="GuestRegistrationPageController">
+    <apex:form id="frm">
+     
+    <!--<apex:actionFunction name="init" action="{!init}"/>
+        <apex:pageBlock title="Event List" id="event_list"> 
+            <apex:pageBlockTable value="{!eventList}" var="e">
+                <apex:column value="{!e.Name}"/>
+                <apex:column value="{!e.Starting_Date__c}"/>
+                <apex:column value="{!e.City__c}"/>
+                <apex:column value="{!e.Number_of_registrations__c	}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>-->
+        
+    </apex:form>         
+</apex:page>
