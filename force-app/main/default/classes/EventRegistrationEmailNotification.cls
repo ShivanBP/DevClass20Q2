@@ -9,7 +9,7 @@ public class EventRegistrationEmailNotification {
             mail.setSubject('Registration succesful');
             mail.setBccSender(false);
             mail.setUseSignature(false);
-            mail.setPlainTextBody('You have succesfully registered to the event. Wish you a good buzzing.');
+            mail.setPlainTextBody('You have succesfully registered to the event: ' + er.Event__c);
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
         }
     }
