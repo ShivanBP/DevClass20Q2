@@ -1,0 +1,26 @@
+<apex:page controller="RegistrationPageController" docType="html-5.0">
+    <apex:form id="formId">
+        <div style="text-align:center">
+            <apex:image id="coverPicture" value="{!THIS_ORG_URL}sfc/servlet.shepherd/version/download/{!pictureId}" width="685px" height="300"/>
+        </div>
+        <apex:pageBlock>
+            <apex:pageBlockSection title="Choose event" columns="2">  
+                <apex:selectList value="{!selectedEvent}" size="1">
+                    <apex:actionSupport event="onchange" action="{!otherEvent}" reRender="formId"/>
+                    <apex:selectOptions value="{!pickListVals}"/> 
+                </apex:selectList>
+                <apex:outputField value="{!event.Price__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Sign up" columns="1">
+                <apex:inputField label="First Name" value="{!eventReg.FirstName__c}" id="firstName" required="false" />
+                <apex:inputField label="Last Name" value="{!eventReg.LastName__c}" id="lastName" required="false"/>
+                <apex:outputText value="{!lastErrorMessage}" styleClass="errorMsg" rendered="{!LEN(lastErrorMessage)>0}"/>
+                <apex:inputField label="Email address" value="{!eventReg.Email__c}" id="email" type="email" required="false"/>
+                <apex:outputText value="{!emailErrorMessage}" styleClass="errorMsg" rendered="{!LEN(emailErrorMessage)>0}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!save}" value="Register"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
