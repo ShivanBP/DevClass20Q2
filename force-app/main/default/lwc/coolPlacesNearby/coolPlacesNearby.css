@@ -1,0 +1,121 @@
+.yelpCard {
+    margin: 25px;
+    transition: width 2s;
+    transition-timing-function: linear;
+    position: relative;
+    font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.yelpCard:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 2px black, 0 0 25px lightgrey, 0 0 5px grey;
+}
+
+.pictureFrame {
+    margin: 10px 0px;
+    width: 170px;
+}
+
+img {
+    border-radius: 5px;
+    width: 150px;
+    height: 150px;
+}
+
+.Name {
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.reviewCount {
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+.address {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+.star-ratings-sprite {
+    background: url("/resource/yelpStarEmpty") repeat-x;
+    float: left;
+    font-size: 0;
+    height: 28px;
+    width: 128px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 135px;
+    margin: 0 auto;
+  }
+  .star-ratings-sprite-rating {
+      background: url("/resource/yelpStarFull") repeat-x;
+      background-position: 0 100%;
+      float: left;
+      font-size: 0;
+      height: 28px;
+      display:block;
+      margin: 0 auto;
+      font-size: 0;
+      line-height: 0;
+      overflow: hidden;
+      text-indent: -999em;
+    }
+
+.Misc {
+    font-size: 19px;
+}
+
+.half {
+    width:10%;
+}
+
+.one {
+    width:20%;
+}
+
+.oneAndaHalf {
+    width:30%;
+}
+
+.two {
+    width:40%;
+}
+
+.twoAndaHalf {
+    width:50%;
+}
+
+.three {
+    width:60%;
+}
+
+.threeAndaHalf {
+    width:70%;
+}
+
+.four {
+    width:80%;
+}
+
+.fourAndaHalf {
+    width:90%;
+    background: url("/resource/yelpStarFull") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    font-size: 0;
+    height: 28px;
+    display:block;
+    margin: 0 auto;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+}
+
+.five {
+    width:100%;
+}
