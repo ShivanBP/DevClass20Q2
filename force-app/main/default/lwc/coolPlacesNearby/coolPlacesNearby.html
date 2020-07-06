@@ -1,0 +1,41 @@
+<template>
+    <lightning-card>
+		<div class="slds-card__body_inner">
+            <template if:true={dataLoad}>
+                <template for:each={dataLoad} for:item="place">
+                    <div class="slds-grid slds-gutters slds-box yelpCard" key={place.Id}>
+                        <div class="slds-col slds-size_1-of-4 pictureFrame" key={place.Id}>
+                            <img src={place.image_url} key={place.Id}/>
+                        </div>
+                        <div class="slds-col slds-size_3-of-4" key={place.Id}>
+                            <!-- NAME -->
+                            <span class="Name">{place.index}. </span><a href={place.url} class="Name">{place.name}</a><br>
+                            <!-- RATING + REVIEW -->
+                            <div class="star-ratings-sprite">
+                                <span class={place.class}></span>
+                            </div>
+                            <span class="reviewCount">{place.review_count}</span><br><br>
+                            <!-- PRICE + CATEGORY -->
+                            <div class="Misc">
+                                <span>${place.price}</span>
+                                <span> &#183; </span>
+                                {place.categories}
+                            </div><br>
+                            <!-- PHONE + ADDRESS -->
+                            <div class="address">
+                                <p>{place.phone}</p>
+                                <p>{place.location.address1}</p>
+                                <p>{place.location.city}</p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+			<template if:true={error}>
+				<div class="slds-text-color_error">
+					An error occurred while loading the cool places
+				</div>
+			</template>
+        </div>
+    </lightning-card>
+</template>
