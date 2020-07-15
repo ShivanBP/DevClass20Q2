@@ -5,6 +5,9 @@
         "paths": {
             "c/coolPlacesNearby": [
                 "coolPlacesNearby/coolPlacesNearby.js"
+            ],
+            "c/productsToOpportunityPanel": [
+                "productsToOpportunityPanel/productsToOpportunityPanel.js"
             ]
         }
     },

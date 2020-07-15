@@ -1,0 +1,75 @@
+<template>
+	<lightning-card title="Products" icon-name="utility:animal_and_nature">
+		<div class="slds-card__body_inner">
+			<div class="filters">
+				<!-- Picklist -->
+				<lightning-combobox
+					name="SelectPricebook"
+					label="Pricebook"
+					value={selectedPricebook}
+					placeholder="Select Progress"
+					options={pricebookList}
+					onchange={pickPricebook}
+					class="pricebookFilter">
+				</lightning-combobox>
+				<!-- Checkbox group -->
+				<div>
+					<lightning-checkbox-group
+						name="Checkbox Group"
+						label="Families"
+						options={selectableFamilies}
+						value={selectedFamilies}
+						onchange={pickFamily}>
+					</lightning-checkbox-group>
+				</div>
+				<!-- Searchbox -->
+				<lightning-input type="text" onchange={typeText} class="searchTextFilter"></lightning-input>
+				<lightning-button variant="brand" title="Search" label="Search" onclick={doSearch}></lightning-button>
+			</div>
+			<!-- Start bear list -->
+				<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
+				<lightning-layout multiple-rows="true">
+					<lightning-layout-item size = "12" margin= "around-small">
+					 <div class="slds-align_absolute-center">
+						<ul class="slds-button-group-row">
+							<template if:true={hasPrev}>
+							 	<li class="slds-button-group-item" > 
+									<button class="slds-button slds-button_neutral" onclick ={onPrev}>prev</button>
+								</li>
+							 </template>
+							 <template for:each={pagesList} for:item= "pageNumber">
+						  		<li class="slds-button-group-item"  key={pageNumber}> 
+							  		<button data-id={pageNumber}  class="slds-button slds-button_neutral" onclick={onPageClick}>{pageNumber}</button>
+						  		</li>
+					 		</template>
+					 <template if:true={hasNext}>
+					 	<li class="slds-button-group-item" > 
+							 <button class="slds-button slds-button_neutral"  onclick={onNext} >next</button>
+						  </li>
+						 </template>
+					   </ul>
+					 </div>
+				 </lightning-layout-item>
+				 <lightning-layout-item size = "12"  padding = "around-medium">
+					<div  class="slds-align_absolute-center">		 
+					<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->	
+						<lightning-datatable
+							key-field="id"
+							data={productList}
+							columns={columns}>
+						</lightning-datatable>
+						<!-- End bear list -->
+						<!-- Data failed to load -->
+						<template if:true={error}>
+							<div class="slds-text-color_error">
+								An error occurred while loading the bear list
+							</div>
+						</template>
+					<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
+					</div>
+				</lightning-layout-item>
+ 			</lightning-layout>
+		</div>
+		<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
+	</lightning-card>
+</template>
