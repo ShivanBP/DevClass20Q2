@@ -13,7 +13,7 @@ public with sharing class productsToOpportunityController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Product2> fetchPricebooksFromServer() {
+    public static List<Pricebook2> fetchPricebooksFromServer() {
         return Database.query('SELECT Name, IsStandard FROM Pricebook2 WHERE IsActive = True');
     }
 

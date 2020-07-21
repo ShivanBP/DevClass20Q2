@@ -4,6 +4,7 @@
 			<div class="filters">
 				<!-- Picklist -->
 				<lightning-combobox
+					style="width:12%;"
 					name="SelectPricebook"
 					label="Pricebook"
 					value={selectedPricebook}
@@ -13,7 +14,7 @@
 					class="pricebookFilter">
 				</lightning-combobox>
 				<!-- Checkbox group -->
-				<div>
+				<div class="familyFilter">
 					<lightning-checkbox-group
 						name="Checkbox Group"
 						label="Families"
@@ -23,53 +24,61 @@
 					</lightning-checkbox-group>
 				</div>
 				<!-- Searchbox -->
-				<lightning-input type="text" onchange={typeText} class="searchTextFilter"></lightning-input>
-				<lightning-button variant="brand" title="Search" label="Search" onclick={doSearch}></lightning-button>
-			</div>
-			<!-- Start bear list -->
+				<div class="slds-grid">
+					<div class="slds-col slds-size_3-of-16">
+						<lightning-input type="text" onchange={typeText} class="searchTextFilter"></lightning-input>
+					</div>
+				<!-- Search Button -->
+					<div class="slds-col slds-size_1-of-16">
+						<lightning-button variant="brand" title="Search" label="Search" onclick={doSearch}></lightning-button>
+					</div>
+				<!-- Add Products to Opportunity Button -->
+					<div class="slds-col slds-size_1-of-16">
+						<lightning-button variant="brand" title="AddProducts" label="Add Products to Opportunity Button" onclick={goToEditSelectedPanel}></lightning-button>
+					</div>
+				</div>
+			</div>	
 				<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
 				<lightning-layout multiple-rows="true">
 					<lightning-layout-item size = "12" margin= "around-small">
-					 <div class="slds-align_absolute-center">
 						<ul class="slds-button-group-row">
 							<template if:true={hasPrev}>
-							 	<li class="slds-button-group-item" > 
-									<button class="slds-button slds-button_neutral" onclick ={onPrev}>prev</button>
+								<li class="slds-button-group-item" > 
+									<button class="slds-button slds-button_neutral" onclick ={onPrev}>Prev</button>
 								</li>
-							 </template>
-							 <template for:each={pagesList} for:item= "pageNumber">
-						  		<li class="slds-button-group-item"  key={pageNumber}> 
-							  		<button data-id={pageNumber}  class="slds-button slds-button_neutral" onclick={onPageClick}>{pageNumber}</button>
-						  		</li>
-					 		</template>
-					 <template if:true={hasNext}>
-					 	<li class="slds-button-group-item" > 
-							 <button class="slds-button slds-button_neutral"  onclick={onNext} >next</button>
-						  </li>
-						 </template>
-					   </ul>
-					 </div>
+							</template>
+							<template for:each={pagesList} for:item= "pageNumber">
+								<li class="slds-button-group-item"  key={pageNumber}> 
+									<button data-id={pageNumber}  class="slds-button slds-button_neutral" onclick={onPageClick}>{pageNumber}</button>
+								</li>
+							</template>
+							<template if:true={hasNext}>
+								<li class="slds-button-group-item" > 
+									<button class="slds-button slds-button_neutral"  onclick={onNext} >Next</button>
+								</li>
+							</template>
+						</ul>
 				 </lightning-layout-item>
 				 <lightning-layout-item size = "12"  padding = "around-medium">
-					<div  class="slds-align_absolute-center">		 
+					<div>		 
 					<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->	
+						<!-- Datatable -->
 						<lightning-datatable
 							key-field="id"
-							data={productList}
-							columns={columns}>
+							data={currentPageData}
+							columns={columns}
+							onrowselection={getSelectedName}>
 						</lightning-datatable>
-						<!-- End bear list -->
+						<!-- End of Datatable -->
 						<!-- Data failed to load -->
 						<template if:true={error}>
 							<div class="slds-text-color_error">
 								An error occurred while loading the bear list
 							</div>
 						</template>
-					<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
 					</div>
 				</lightning-layout-item>
  			</lightning-layout>
 		</div>
-		<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
 	</lightning-card>
 </template>

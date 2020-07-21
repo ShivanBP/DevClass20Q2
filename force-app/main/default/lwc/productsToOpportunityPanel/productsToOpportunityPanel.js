@@ -10,36 +10,35 @@ export default class ProductsToOpportunityPanel extends LightningElement {
         { label: 'Unit Price', fieldName: 'UnitPrice', type: 'currency', sortable: true},
         { label: 'Product Code', fieldName: 'ProductCode', type: 'number', sortable: true},
         { label: 'Description', fieldName: 'Description', type: 'text', sortable: true},
-        { label: 'LastModifiedDate', fieldName: 'LastModifiedDate', type: 'date', sortable: true}
+        { label: 'LastModifiedDate', fieldName: 'LastModifiedDate', type: 'date', sortable: true} 
     ];    
     pricebookList;
     selectedPricebook;
     selectableFamilies;
-    selectedFamilies ;
+    selectedFamilies;
     searchText;
-    productList;
+    selectedProducts;
     error;
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     data=[];
     @track page = 1;
-    perpage = 5;
+    perpage = 20;
     @track pages = [];
-    set_size = 5;
-
-    renderedCallback(){
-        this.renderButtons();   
-    }
-    renderButtons = ()=>{
-        this.template.querySelectorAll('button').forEach((but)=>{
-            but.style.backgroundColor = this.page===parseInt(but.dataset.id,10)?'yellow':'white';
-         });
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    set_size = 10;
 
     connectedCallback(){
         //Also calling fetchProducts in it's callback function
         this.fetchPricebooks();
         this.fetchProductFamilies();
+    }
+
+    renderedCallback(){
+        this.renderButtons();   
+    }
+
+    renderButtons = ()=>{
+        this.template.querySelectorAll('button').forEach((but)=>{
+            but.style.backgroundColor = this.page===parseInt(but.dataset.id,10)?'yellow':'white';
+         });
     }
 
     fetchPricebooks(){
@@ -55,7 +54,6 @@ export default class ProductsToOpportunityPanel extends LightningElement {
                     this.selectedPricebook = result[i].Id;
                 }
             }
-            console.log('fetchpricebooks:' + this.selectedPricebook);
             this.fetchProducts();
 
         })
@@ -71,7 +69,8 @@ export default class ProductsToOpportunityPanel extends LightningElement {
         console.log(this.selectedFamilies);
         fetchProductsFromServer({pricebookId: this.selectedPricebook, selectedFamilies: this.selectedFamilies, searchText: this.searchText})
         .then(result => {
-            this.productList = [];
+            this.data = [];
+            console.log(result);
             for(let i = 0; i < result.length; i++){
                 var product = [];
                 product.Name = result[i].Product2.Name;
@@ -80,9 +79,11 @@ export default class ProductsToOpportunityPanel extends LightningElement {
                 product.Id = result[i].Product2Id;
                 product.ProductCode = result[i].Product2.ProductCode;
                 product.Description = result[i].Product2.Description;
-                product.LastModifiedDate = result[i].LastModifiedDate;
-                this.productList.push(product);
+                console.log(result[i].LastModifiedDate);
+                product.LastModifiedDate = result[i].Product2.LastModifiedDate;
+                this.data.push(product);
             }
+            this.setPages(this.data);
         })
         .catch(error => {
             this.error = error;
@@ -121,8 +122,13 @@ export default class ProductsToOpportunityPanel extends LightningElement {
         this.searchText = event.target.value;
     }
 
+    getSelectedProducts(event) {
+        this.selectedProducts = event.detail.selectedRows;
+    }
+    
     doSearch(){
         this.fetchProducts();
+        this.renderButtons();
     }
 
     get pagesList(){
@@ -131,13 +137,7 @@ export default class ProductsToOpportunityPanel extends LightningElement {
             return this.pages.slice(this.page-mid, this.page+mid-1);
         } 
         return this.pages.slice(0,this.set_size);
-     }
-    
-     async connectedCallback(){
-        this.data = await getAccountList();
-        this.setPages(this.data);
-        
-     }
+    }
     
     pageData = ()=>{
         let page = this.page;
@@ -145,14 +145,15 @@ export default class ProductsToOpportunityPanel extends LightningElement {
         let startIndex = (page*perpage) - perpage;
         let endIndex = (page*perpage);
         return this.data.slice(startIndex,endIndex);
-     }
+    }
 
     setPages = (data)=>{
+        this.pages = [];
         let numberOfPages = Math.ceil(data.length / this.perpage);
         for (let index = 1; index <= numberOfPages; index++) {
             this.pages.push(index);
         }
-     }  
+    }  
     
     get hasPrev(){
         return this.page > 1;
@@ -172,11 +173,14 @@ export default class ProductsToOpportunityPanel extends LightningElement {
 
     onPageClick = (e)=>{
         this.page = parseInt(e.target.dataset.id,10);
-        
     }
 
     get currentPageData(){
         return this.pageData();
+    }
+
+    goToEditSelectedPanel(){
+        
     }
 
 }
